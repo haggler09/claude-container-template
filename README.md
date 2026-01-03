@@ -67,3 +67,16 @@ gh pr create             # Create a pull request
 - Edit `pyproject.toml` to add project dependencies
 - Modify `.devcontainer/Dockerfile` for additional tools
 - Update `CLAUDE.md` with project-specific context
+
+## Syncing with Template Updates
+
+To pull updates from the template repository into your project:
+
+```bash
+# Add the template as a remote (first time only)
+git remote add template_container https://github.com/haggler09/claude-container-template.git
+
+# Fetch and merge updates
+git fetch template_container
+git merge template_container/main --allow-unrelated-histories
+```
