@@ -1,0 +1,25 @@
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "Python project with Claude Code development environment"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "pytest",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff",
+    "pytest",
+]
