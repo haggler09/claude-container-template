@@ -28,5 +28,6 @@ USER vscode
 # Install uv (fast Python package manager) as vscode user
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Set PATH for uv
+# Set PATH for uv and configure link mode for Docker volumes
 ENV PATH="/home/vscode/.local/bin:${PATH}"
+ENV UV_LINK_MODE=copy
