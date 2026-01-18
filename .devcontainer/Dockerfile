@@ -19,6 +19,29 @@ RUN apt-get update && apt-get install -y \
     jq \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Neovim 0.11+ (required for vim.lsp.config API)
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "aarch64" ]; then \
+      NVIM_ARCH="arm64"; \
+    else \
+      NVIM_ARCH="x86_64"; \
+    fi && \
+    curl -LO "https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-${NVIM_ARCH}.tar.gz" && \
+    tar -xzf "nvim-linux-${NVIM_ARCH}.tar.gz" && \
+    mv "nvim-linux-${NVIM_ARCH}" /opt/nvim && \
+    ln -s /opt/nvim/bin/nvim /usr/local/bin/nvim && \
+    rm "nvim-linux-${NVIM_ARCH}.tar.gz"
+
+# Create neovim config that loads project-specific config
+RUN mkdir -p /home/vscode/.config/nvim && \
+    cat <<'EOF' > /home/vscode/.config/nvim/init.lua
+local project_config = vim.fn.getcwd() .. "/.nvim/init.lua"
+if vim.fn.filereadable(project_config) == 1 then
+  dofile(project_config)
+end
+EOF
+RUN chown -R vscode:vscode /home/vscode/.config
+
 # Install Claude Code
 RUN npm install -g @anthropic-ai/claude-code
 
