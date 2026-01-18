@@ -8,6 +8,7 @@ Docker devcontainer template for Python development with Claude Code.
 - uv (fast Python package manager)
 - Claude Code CLI
 - GitHub CLI (gh)
+- Neovim 0.11+ (with project-specific config support)
 - VS Code extensions (Python, Pylance, Ruff)
 
 ## Prerequisites
@@ -61,6 +62,21 @@ gh auth status           # Check auth status
 gh repo clone owner/repo # Clone a repository
 gh pr create             # Create a pull request
 ```
+
+### Neovim
+
+Neovim 0.11+ is installed and configured to load project-specific settings.
+
+To customize Neovim for your project, create `.nvim/init.lua` in your project root:
+
+```lua
+-- .nvim/init.lua
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+-- Add your project-specific settings here
+```
+
+This file is automatically loaded when you run `nvim` from the project directory.
 
 ## Customization
 
